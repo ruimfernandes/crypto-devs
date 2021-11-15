@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { getAddress, getCompany, setupWeb3 } from "./web3Client";
+import { getAddress, getCompanyContract, setupWeb3 } from "./web3Client";
+import Company from "./components/Company";
 
 import "./App.css";
 
@@ -10,13 +11,17 @@ function App() {
   useEffect(() => {
     const web3 = setupWeb3();
     getAddress(web3).then((addresses) => setAddress(addresses[0]));
-    getCompany(web3).then((company) => setCompany(company));
+    getCompanyContract(web3).then(contract => {
+      console.log(contract)
+      contract.methods.companies(1).call().then(r => setCompany(r))
+    });
   }, []);
 
   return (
     <div className="App">
       <h1>Crypto devs</h1>
       <span>{address}</span>
+      <Company company={company}></Company>
     </div>
   );
 }
