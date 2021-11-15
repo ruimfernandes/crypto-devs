@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import {
   createCompany,
   getAddress,
-  getCompany,
-  getCompaniesCount,
+  getCompaniesList,
   setupWeb3,
 } from "./web3Client";
 import Company from "./components/Company";
@@ -12,7 +11,7 @@ import "./App.css";
 
 function App() {
   const [address, setAddress] = useState("N/A");
-  const [company, setCompany] = useState(null);
+  const [companies, setCompanies] = useState([]);
   const [name, setName] = useState("");
 
   useEffect(() => {
@@ -27,17 +26,13 @@ function App() {
     fetchInitialData();
   }, []);
 
-
   const fetchCompanies = async () => {
-    const companies_count = await getCompaniesCount();
-    const company = await getCompany(1);
-    console.log(companies_count);
-    setCompany(company);
+    const companies = await getCompaniesList();
+    setCompanies(companies);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("The name you entered was: ", name);
     createCompany(address, name);
   };
 
@@ -45,7 +40,9 @@ function App() {
     <div className="App">
       <h1>Crypto devs</h1>
       <span>{address}</span>
-      <Company company={company}></Company>
+      {companies.map((value, index) => {
+        return <Company key={index} company={value} />;
+      })}
       <div>
         <form onSubmit={handleSubmit}>
           <h3>Insert company</h3>

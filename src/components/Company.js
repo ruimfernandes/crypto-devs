@@ -1,7 +1,6 @@
 import "./Company.css";
 
 function Company(props) {
-  console.log(props);
   return (
     <div class="container">
       {props.company ? (
