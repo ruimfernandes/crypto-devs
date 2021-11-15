@@ -13,7 +13,8 @@
     "truffle": "5.4.19",
     "truffle-contract": "^4.0.31",
     "web-vitals": "^1.0.1",
-    "web3": "^1.6.0"
+    "web3": "^1.6.0",
+    "contracts": "file:./truffle/build/contracts"
   },
   "scripts": {
     "start": "react-scripts start",
